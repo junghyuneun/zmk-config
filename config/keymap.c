@@ -24,3 +24,9 @@ static void on_key_event(struct zmk_event *event) {
 
 // 이벤트 리스너 등록
 ZMK_LISTEN(on_key_event);
+
+void display_input(const char *input) {
+    char display_text[32]; // 적절한 크기로 배열 선언
+    snprintf(display_text, sizeof(display_text), "%s: %s", username, input);
+    zmk_display_set_text(ZMK_DISPLAY_OLED_RIGHT, display_text);
+}
