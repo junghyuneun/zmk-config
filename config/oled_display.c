@@ -1,7 +1,3 @@
-#define OLED_DRIVER_TYPE 2 // SSD1306
-#define OLED_DISPLAY_SIZE 128, 32
-#define OLED_ADDRESS 0x3C
-#include <dt-bindings/zmk/matrix_transform.h>
 #include <zmk/keys.h>
 #include <zmk/event_manager.h>
 #include <zmk/events/keycode_event.h>
@@ -11,12 +7,10 @@ static void display_keycode_on_oled(uint8_t keycode) {
     char buf[32];
     snprintf(buf, sizeof(buf), "Key: %s", keycode_to_string(keycode));
 
-    // 오른쪽 OLED 초기화
-    zmk_oled_clear_right(); // 오른쪽 OLED 화면 초기화
-    zmk_oled_set_cursor_right(0, 1); // 오른쪽 OLED의 두 번째 줄로 커서 이동
-
-    // 두 번째 줄에 텍스트 표시
-    zmk_oled_print_right(buf); // 오른쪽 OLED의 두 번째 줄에 텍스트 표시
+    // OLED 초기화 및 두 번째 줄에 텍스트 표시
+    zmk_oled_clear(); // OLED 초기화
+    zmk_oled_set_cursor(0, 1); // 두 번째 줄로 커서 이동
+    zmk_oled_print(buf); // 텍스트 출력
 }
 
 static void keycode_event_handler(struct zmk_event_header *hdr) {
