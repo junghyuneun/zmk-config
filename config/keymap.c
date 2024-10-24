@@ -4,7 +4,7 @@
 
 const char *username = "LSJ"; // 사용자명
 
-void display_input(const char *input) {
+void display_input_on_second_line(const char *input) {
     // 입력값을 OLED에 출력
     zmk_display_set_text(ZMK_DISPLAY_OLED_RIGHT, input);
 }
@@ -17,7 +17,7 @@ void display_username() {
 static void on_key_event(struct zmk_event *event) {
     if (event->type == ZMK_EVENT_KEY_PRESS) {
         const char *key_label = event->key.label; // 키 라벨 가져오기
-        display_input(key_label); // OLED에 입력값 표시
+        display_input_on_second_line(key_label); // OLED에 입력값 표시
         display_username(); // 사용자명 표시
     }
 }
