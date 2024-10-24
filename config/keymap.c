@@ -1,6 +1,7 @@
 #define OLED_DRIVER_TYPE 2 // SSD1306
 #define OLED_DISPLAY_SIZE 128, 32
 #define OLED_ADDRESS 0x3C
+#include <dt-bindings/zmk/matrix_transform.h>
 #include <zmk/keys.h>
 #include <zmk/event_manager.h>
 #include <zmk/events/keycode_event.h>
