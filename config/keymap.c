@@ -2,7 +2,7 @@
 #include <zmk/event.h>
 #include <zmk/display.h>
 
-const char *username = "사용자명"; // 사용자명
+const char *username = "LSJ"; // 사용자명
 
 void display_input(const char *input) {
     // 입력값을 OLED에 출력
