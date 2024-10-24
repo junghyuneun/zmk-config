@@ -10,8 +10,11 @@ static void display_keycode_on_oled(uint8_t keycode) {
     char buf[32];
     snprintf(buf, sizeof(buf), "Key: %s", keycode_to_string(keycode));
 
-    // OLED 화면을 업데이트할 때 두 번째 줄에만 텍스트 표시
-    zmk_oled_set_cursor(0, 1); // (x, y) 위치 설정 (0, 1은 두 번째 줄)
+    // OLED 화면을 초기화
+    zmk_oled_clear(); // 전체 화면 초기화
+    zmk_oled_set_cursor(0, 1); // 두 번째 줄로 커서 이동
+
+    // 두 번째 줄에 텍스트 표시
     zmk_oled_print(buf); // 두 번째 줄에 텍스트 표시
 }
 
