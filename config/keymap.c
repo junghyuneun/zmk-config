@@ -11,12 +11,12 @@ static void display_keycode_on_oled(uint8_t keycode) {
     char buf[32];
     snprintf(buf, sizeof(buf), "Key: %s", keycode_to_string(keycode));
 
-    // OLED 화면을 초기화
-    zmk_oled_clear(); // 전체 화면 초기화
-    zmk_oled_set_cursor(0, 1); // 두 번째 줄로 커서 이동
+    // 오른쪽 OLED 초기화
+    zmk_oled_clear_right(); // 오른쪽 OLED 화면 초기화
+    zmk_oled_set_cursor_right(0, 1); // 오른쪽 OLED의 두 번째 줄로 커서 이동
 
     // 두 번째 줄에 텍스트 표시
-    zmk_oled_print(buf); // 두 번째 줄에 텍스트 표시
+    zmk_oled_print_right(buf); // 오른쪽 OLED의 두 번째 줄에 텍스트 표시
 }
 
 static void keycode_event_handler(struct zmk_event_header *hdr) {
