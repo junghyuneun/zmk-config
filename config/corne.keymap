@@ -41,7 +41,7 @@
         };
 
         terminal {
-            bindings = <&kp LG(TILDE)>;
+            bindings = <&kp LG(GRAVE)>;
             key-positions = <13 14>;
         };
 
