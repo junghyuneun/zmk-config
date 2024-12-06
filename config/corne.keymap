@@ -22,7 +22,7 @@
         compatible = "zmk,combos";
 
         tilde {
-            bindings = <&kp TILDE>;
+            bindings = <&kp GRAVE>;
             key-positions = <1 2>;
             timeout-ms = <1000>;
             require-prior-idle-ms = <1>;
