@@ -41,7 +41,7 @@
 
         terminal {
             bindings = <&kp LG(TILDE)>;
-            key-positions = <24 25>;
+            key-positions = <24 12>;
         };
 
         left {
