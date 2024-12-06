@@ -63,6 +63,11 @@
             bindings = <&kp RIGHT>;
             key-positions = <33 21>;
         };
+
+        enter {
+            bindings = <&kp ENTER>;
+            key-positions = <34 35>;
+        };
     };
 
     keymap {
