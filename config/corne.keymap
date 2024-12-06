@@ -44,9 +44,9 @@
             //                    | GUI |     | SPC |   | ENT |     | ALT |
 
             bindings = <
-&kp GRAVE  &kp N1     &kp N2      &kp N3             &kp N4                &kp N5                  &kp N6          &kp N7          &kp N8          &kp N9           &kp N0            &kp MINUS
+&kp GRAVE  &kp N1     &kp N2      &kp N3             &kp N4                &kp N5                  &kp N6          &kp N7          &kp N8          &kp N9           &kp N0            &kp BACKSPACE
 &kp LCTRL  &kp COMMA  &kp PERIOD  &kp C_VOLUME_DOWN  &kp C_VOLUME_UP       &kp K_MUTE              &kp LEFT_ARROW  &kp DOWN_ARROW  &kp UP_ARROW    &kp RIGHT_ARROW  &kp BACKSLASH     &kp EQUAL
-&kp LSHFT  &kp ESC    &kp TAB     &kp GLOBE          &kp C_BRIGHTNESS_DEC  &kp C_BRIGHTNESS_INC    &kp BACKSPACE   &kp SLASH       &kp APOSTROPHE  &kp SEMICOLON    &kp LEFT_BRACKET  &kp RIGHT_BRACKET
+&kp LSHFT  &kp ESC    &kp TAB     &kp GLOBE          &kp C_BRIGHTNESS_DEC  &kp C_BRIGHTNESS_INC    &kp MINUS       &kp SLASH       &kp APOSTROPHE  &kp SEMICOLON    &kp LEFT_BRACKET  &kp RIGHT_BRACKET
                                   &kp LMETA          &kp LALT              &kp SPACE               &kp ENTER       &tog 1          &tog 2
             >;
         };
