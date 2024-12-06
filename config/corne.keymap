@@ -28,6 +28,16 @@
             require-prior-idle-ms = <1>;
             layers = <0>;
         };
+
+        tab {
+            bindings = <&kp TAB>;
+            key-positions = <12 13>;
+        };
+
+        right_angle_bracket {
+            bindings = <&kp RIGHT_BRACKET>;
+            key-positions = <34 35>;
+        };
     };
 
     keymap {
@@ -58,7 +68,7 @@
             bindings = <
 &kp ESCAPE  &kp N1            &kp N2         &kp N3             &kp N4                &kp N5                  &kp N6          &kp N7          &kp N8        &kp N9           &kp N0            &kp BACKSPACE
 &kp LCTRL   &kp SINGLE_QUOTE  &kp SEMICOLON  &kp C_VOLUME_DOWN  &kp C_VOLUME_UP       &kp K_MUTE              &kp LEFT_ARROW  &kp DOWN_ARROW  &kp UP_ARROW  &kp RIGHT_ARROW  &kp MINUS         &kp EQUAL
-&kp LSHFT   &kp GRAVE         &kp TAB        &kp GLOBE          &kp C_BRIGHTNESS_DEC  &kp C_BRIGHTNESS_INC    &kp BACKSLASH   &kp SLASH       &kp PERIOD    &kp COMMA        &kp LEFT_BRACKET  &kp RIGHT_BRACKET
+&kp LSHFT   &kp GRAVE         &kp TAB        &kp GLOBE          &kp C_BRIGHTNESS_DEC  &kp C_BRIGHTNESS_INC    &kp BACKSLASH   &kp SLASH       &kp PERIOD    &kp COMMA        &kp LEFT_BRACKET  &kp RSHIFT
                                              &kp LMETA          &kp LALT              &kp SPACE               &kp ENTER       &tog 1          &tog 2
             >;
         };
