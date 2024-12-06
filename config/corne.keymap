@@ -22,14 +22,6 @@
     combos {
         compatible = "zmk,combos";
 
-        tilde {
-            bindings = <&kp GRAVE>;
-            key-positions = <1 2>;
-            timeout-ms = <1000>;
-            require-prior-idle-ms = <1>;
-            layers = <0>;
-        };
-
         tab {
             bindings = <&kp TAB>;
             key-positions = <12 13>;
