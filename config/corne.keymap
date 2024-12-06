@@ -38,6 +38,11 @@
             bindings = <&kp RIGHT_BRACKET>;
             key-positions = <34 35>;
         };
+
+        terminal {
+            bindings = <&kp LG(TILDE)>;
+            key-positions = <24 25>;
+        };
     };
 
     keymap {
