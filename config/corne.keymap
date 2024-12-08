@@ -39,22 +39,22 @@
 
         left {
             bindings = <&kp LEFT_ARROW>;
-            key-positions = <18 30>;
+            key-positions = <18 19>;
         };
 
         down {
             bindings = <&kp DOWN_ARROW>;
-            key-positions = <19 31>;
+            key-positions = <19 20>;
         };
 
         up {
             bindings = <&kp UP_ARROW>;
-            key-positions = <20 32>;
+            key-positions = <20 21>;
         };
 
         right {
             bindings = <&kp RIGHT>;
-            key-positions = <33 21>;
+            key-positions = <21 22>;
         };
 
         enter {
@@ -91,7 +91,7 @@
             bindings = <
 &kp ESCAPE  &mt EXCLAMATION NUMBER_1  &mt AT_SIGN NUMBER_2  &mt HASH NUMBER_3  &mt DOLLAR NUMBER_4   &mt PERCENT N5          &mt CARET NUMBER_6  &mt AMPERSAND N7  &mt ASTERISK N8  &mt LEFT_PARENTHESIS N9  &mt RIGHT_PARENTHESIS N0  &kp BACKSPACE
 &kp LCTRL   &kp SINGLE_QUOTE          &kp SEMICOLON         &kp C_VOLUME_DOWN  &kp C_VOLUME_UP       &kp K_MUTE              &kp LEFT_ARROW      &kp DOWN_ARROW    &kp UP_ARROW     &kp RIGHT_ARROW          &kp MINUS                 &kp EQUAL
-&kp LSHFT   &kp GRAVE                 &kp PAGE_DOWN         &kp PAGE_UP        &kp C_BRIGHTNESS_DEC  &kp C_BRIGHTNESS_INC    &kp BACKSLASH       &kp SLASH         &kp PERIOD       &kp COMMA                &kp LEFT_BRACKET          &kp RSHIFT
+&kp LSHFT   &kp GRAVE                 &kp PAGE_DOWN         &kp PAGE_UP        &kp C_BRIGHTNESS_DEC  &kp C_BRIGHTNESS_INC    &kp BACKSLASH       &kp SLASH         &kp COMMA       &kp PERIOD                &kp LEFT_BRACKET          &kp RSHIFT
                                                             &kp LMETA          &kp LALT              &kp SPACE               &kp ENTER           &to 0             &to 2
             >;
         };
