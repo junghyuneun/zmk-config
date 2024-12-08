@@ -5,7 +5,6 @@
  */
 
 #include <behaviors.dtsi>
-#include <dt-bindings/zmk/backlight.h>
 #include <dt-bindings/zmk/bt.h>
 #include <dt-bindings/zmk/ext_power.h>
 #include <dt-bindings/zmk/keys.h>
@@ -91,7 +90,7 @@
             bindings = <
 &kp ESCAPE  &mt EXCLAMATION NUMBER_1  &mt AT_SIGN NUMBER_2  &mt HASH NUMBER_3  &mt DOLLAR NUMBER_4   &mt PERCENT N5          &mt CARET NUMBER_6  &mt AMPERSAND N7  &mt ASTERISK N8  &mt LEFT_PARENTHESIS N9  &mt RIGHT_PARENTHESIS N0  &kp BACKSPACE
 &kp LCTRL   &kp SINGLE_QUOTE          &kp SEMICOLON         &kp C_VOLUME_DOWN  &kp C_VOLUME_UP       &kp K_MUTE              &kp LEFT_ARROW      &kp DOWN_ARROW    &kp UP_ARROW     &kp RIGHT_ARROW          &kp MINUS                 &kp EQUAL
-&kp LSHFT   &kp GRAVE                 &kp PAGE_DOWN         &kp PAGE_UP        &kp C_BRIGHTNESS_DEC  &kp C_BRIGHTNESS_INC    &kp BACKSLASH       &kp SLASH         &kp COMMA       &kp PERIOD                &kp LEFT_BRACKET          &kp RSHIFT
+&kp LSHFT   &kp GRAVE                 &kp PAGE_DOWN         &kp PAGE_UP        &kp C_BRIGHTNESS_DEC  &kp C_BRIGHTNESS_INC    &kp BACKSLASH       &kp SLASH         &kp COMMA        &kp PERIOD               &kp LEFT_BRACKET          &kp RSHIFT
                                                             &kp LMETA          &kp LALT              &kp SPACE               &kp ENTER           &to 0             &to 2
             >;
         };
@@ -104,10 +103,10 @@
             //                    | GUI |     | SPC |   | ENT |     | ALT |
 
             bindings = <
-&kp C_VOL_UP     &kp K_MUTE       &kp UP_ARROW     &kp K_PP           &kp C_REWIND        &kp PG_UP                         &kp PRINTSCREEN    &kp SCROLLLOCK  &kp PAUSE_BREAK  &kp DELETE    &kp END       &sys_reset
-&kp C_VOL_DN     &kp LEFT         &kp DOWN         &kp RIGHT          &kp C_FAST_FORWARD  &kp PG_DN                         &kp INSERT         &kp HOME        &kp PG_UP        &kp RBKT      &kp BSLH      &kp GRAVE
-&rgb_ug RGB_TOG  &rgb_ug RGB_EFF  &rgb_ug RGB_BRI  &rgb_ug RGB_BRD    &bl BL_TOG          &rgb_ug RGB_COLOR_HSB(0,0,100)    &bt BT_CLR         &bt BT_SEL 0    &bt BT_SEL 1     &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4
-                                                   &ext_power EP_OFF  &ext_power EP_ON    &to 0                             &ext_power EP_TOG  &tog 1          &tog 2
+&bt BT_CLR       &bt BT_SEL 0     &bt BT_SEL 1     &bt BT_SEL 2       &bt BT_SEL 3      &bt BT_SEL 4                      &kp PRINTSCREEN    &kp SCROLLLOCK  &kp PAUSE_BREAK  &kp DELETE    &kp END       &sys_reset
+&rgb_ug RGB_HUI  &rgb_ug RGB_HUD  &rgb_ug RGB_SAI  &rgb_ug RGB_SAD    &rgb_ug RGB_BRI   &rgb_ug RGB_BRD                   &kp INSERT         &kp HOME        &kp PG_UP        &kp RBKT      &kp BSLH      &kp GRAVE
+&rgb_ug RGB_TOG  &rgb_ug RGB_EFR  &rgb_ug RGB_EFF  &rgb_ug RGB_SPD    &rgb_ug RGB_SPI   &rgb_ug RGB_COLOR_HSB(0,0,100)    &bt BT_CLR         &bt BT_SEL 0    &bt BT_SEL 1     &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4
+                                                   &ext_power EP_OFF  &ext_power EP_ON  &to 0                             &ext_power EP_TOG  &tog 1          &tog 2
             >;
         };
     };
