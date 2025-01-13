@@ -59,18 +59,13 @@
     };
 
     behaviors {
-        td_layer1: td_layer1 {
-            compatible = "zmk,behavior-tap-dance";
-            label = "TD_LAYER1";
-            #binding-cells = <0>;
-            bindings = <&mo 1>, <&to 1>;
-        };
+        ht_layer: ht_layer {
+            compatible = "zmk,behavior-hold-tap";
+            label = "HT_LAYER";
+            bindings = <&mo>, <&to>;
 
-        td_layer2: td_layer2 {
-            compatible = "zmk,behavior-tap-dance";
-            label = "TD_LAYER2";
-            #binding-cells = <0>;
-            bindings = <&mo 2>, <&to 2>;
+            #binding-cells = <2>;
+            tapping-term-ms = <200>;
         };
     };
 
@@ -85,10 +80,10 @@
             //                    | GUI | LWR | SPC |   | ENT | RSE  | ALT |
 
             bindings = <
-&kp ESCAPE  &mt NUMBER_1 Q  &mt NUMBER_2 W  &mt NUMBER_3 E  &mt NUMBER_4 R  &mt N5 T     &mt NUMBER_6 Y  &mt N7 U    &mt N8 I    &mt N9 O  &mt N0 P  &kp BSPC
-&kp LCTRL   &kp A           &kp S           &kp D           &kp F           &kp G        &kp H           &kp J       &kp K       &kp L     &kp SEMI  &kp SQT
-&kp LSHFT   &kp Z           &kp X           &kp C           &kp V           &kp B        &kp N           &kp M       &kp COMMA   &kp DOT   &kp FSLH  &kp RSHFT
-                                            &kp LMETA       &kp LALT        &kp SPACE    &kp ENTER       &td_layer1  &td_layer2
+&kp ESCAPE  &mt NUMBER_1 Q  &mt NUMBER_2 W  &mt NUMBER_3 E  &mt NUMBER_4 R  &mt N5 T     &mt NUMBER_6 Y  &mt N7 U       &mt N8 I       &mt N9 O  &mt N0 P  &kp BSPC
+&kp LCTRL   &kp A           &kp S           &kp D           &kp F           &kp G        &kp H           &kp J          &kp K          &kp L     &kp SEMI  &kp SQT
+&kp LSHFT   &kp Z           &kp X           &kp C           &kp V           &kp B        &kp N           &kp M          &kp COMMA      &kp DOT   &kp FSLH  &kp RSHFT
+                                            &kp LMETA       &kp LALT        &kp SPACE    &kp ENTER       &ht_layer 1 1  &ht_layer 2 2
             >;
         };
 
