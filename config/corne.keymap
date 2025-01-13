@@ -21,6 +21,8 @@
     // 21 backlight + 6 glowlight
 };
 
+&mt { flavor = "tap-preferred"; };
+
 / {
     combos {
         compatible = "zmk,combos";
@@ -56,6 +58,22 @@
         };
     };
 
+    behaviors {
+        td_layer1: td_layer1 {
+            compatible = "zmk,behavior-tap-dance";
+            label = "TD_LAYER1";
+            #binding-cells = <0>;
+            bindings = <&mo 1>, <&to 1>;
+        };
+
+        td_layer2: td_layer2 {
+            compatible = "zmk,behavior-tap-dance";
+            label = "TD_LAYER2";
+            #binding-cells = <0>;
+            bindings = <&mo 2>, <&to 2>;
+        };
+    };
+
     keymap {
         compatible = "zmk,keymap";
 
@@ -67,10 +85,10 @@
             //                    | GUI | LWR | SPC |   | ENT | RSE  | ALT |
 
             bindings = <
-&kp ESCAPE  &mt NUMBER_1 Q  &mt NUMBER_2 W  &mt NUMBER_3 E  &mt NUMBER_4 R  &mt N5 T     &mt NUMBER_6 Y  &mt N7 U  &mt N8 I   &mt N9 O  &mt N0 P  &kp BSPC
-&kp LCTRL   &kp A           &kp S           &kp D           &kp F           &kp G        &kp H           &kp J     &kp K      &kp L     &kp SEMI  &kp SQT
-&kp LSHFT   &kp Z           &kp X           &kp C           &kp V           &kp B        &kp N           &kp M     &kp COMMA  &kp DOT   &kp FSLH  &kp RSHFT
-                                            &kp LMETA       &kp LALT        &kp SPACE    &kp ENTER       &mo 1     &to 2
+&kp ESCAPE  &mt NUMBER_1 Q  &mt NUMBER_2 W  &mt NUMBER_3 E  &mt NUMBER_4 R  &mt N5 T     &mt NUMBER_6 Y  &mt N7 U    &mt N8 I    &mt N9 O  &mt N0 P  &kp BSPC
+&kp LCTRL   &kp A           &kp S           &kp D           &kp F           &kp G        &kp H           &kp J       &kp K       &kp L     &kp SEMI  &kp SQT
+&kp LSHFT   &kp Z           &kp X           &kp C           &kp V           &kp B        &kp N           &kp M       &kp COMMA   &kp DOT   &kp FSLH  &kp RSHFT
+                                            &kp LMETA       &kp LALT        &kp SPACE    &kp ENTER       &td_layer1  &td_layer2
             >;
         };
 
@@ -82,10 +100,10 @@
             //                    | GUI |     | SPC |   | ENT |     | ALT |
 
             bindings = <
-&kp ESCAPE  &kp EXCLAMATION  &kp AT_SIGN       &kp HASH           &kp DOLLAR            &kp PERCENT             &kp CARET       &kp AMPERSAND   &kp ASTERISK     &kp LEFT_PARENTHESIS  &kp RIGHT_PARENTHESIS  &kp BACKSPACE
-&kp LCTRL   &kp LESS_THAN    &kp GREATER_THAN  &kp C_VOLUME_DOWN  &kp C_VOLUME_UP       &kp K_MUTE              &kp LEFT_ARROW  &kp DOWN_ARROW  &kp UP_ARROW     &kp RIGHT_ARROW       &kp MINUS              &kp EQUAL
-&kp LSHFT   &kp GRAVE        &kp PAGE_DOWN     &kp PAGE_UP        &kp C_BRIGHTNESS_DEC  &kp C_BRIGHTNESS_INC    &kp BACKSLASH   &kp TILDE       &kp SLASH        &kp LEFT_BRACKET      &kp RIGHT_BRACKET      &kp RSHIFT
-                                               &kp LMETA          &kp LALT              &kp SPACE               &kp ENTER       &kp LEFT_BRACE  &kp RIGHT_BRACE
+&kp ESCAPE  &kp EXCLAMATION  &kp AT_SIGN       &kp HASH           &kp DOLLAR            &kp PERCENT             &kp CARET       &kp AMPERSAND   &kp ASTERISK  &mt LEFT_PARENTHESIS LESS_THAN  &mt RIGHT_PARENTHESIS GREATER_THAN  &kp BACKSPACE
+&kp LCTRL   &kp LESS_THAN    &kp GREATER_THAN  &kp C_VOLUME_DOWN  &kp C_VOLUME_UP       &kp K_MUTE              &kp LEFT_ARROW  &kp DOWN_ARROW  &kp UP_ARROW  &kp RIGHT_ARROW                 &mt KP_MINUS UNDERSCORE             &mt KP_EQUAL PLUS
+&kp LSHFT   &kp GRAVE        &kp PAGE_DOWN     &kp PAGE_UP        &kp C_BRIGHTNESS_DEC  &kp C_BRIGHTNESS_INC    &kp BACKSLASH   &kp TILDE       &kp SLASH     &kp LEFT_BRACKET                &kp RIGHT_BRACKET                   &kp RSHIFT
+                                               &kp LMETA          &kp LALT              &kp SPACE               &kp ENTER       &to 0           &to 2
             >;
         };
 
