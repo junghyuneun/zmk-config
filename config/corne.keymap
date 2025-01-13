@@ -34,27 +34,7 @@
 
         terminal {
             bindings = <&kp LG(GRAVE)>;
-            key-positions = <13 14>;
-        };
-
-        left {
-            bindings = <&kp LEFT_ARROW>;
-            key-positions = <18 19>;
-        };
-
-        down {
-            bindings = <&kp DOWN_ARROW>;
-            key-positions = <19 20>;
-        };
-
-        up {
-            bindings = <&kp UP_ARROW>;
-            key-positions = <20 21>;
-        };
-
-        right {
-            bindings = <&kp RIGHT>;
-            key-positions = <21 22>;
+            key-positions = <0 1>;
         };
     };
 
