@@ -24,7 +24,7 @@
     flavor = "tap-preferred";
     quick-tap-ms = <300>;
     tapping-term-ms = <400>;
-    require-prior-idle-ms = <300>;
+    require-prior-idle-ms = <125>;
 };
 
 / {
