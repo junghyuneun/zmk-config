@@ -55,10 +55,91 @@
             tapping-term-ms = <200>;
         };
 
-        q: q {
+        q1: q1 {
             compatible = "zmk,behavior-mod-morph";
-            label = "Q";
+            label = "Q1";
             bindings = <&kp Q>, <&kp NUMBER_1>;
+
+            #binding-cells = <0>;
+            mods = <(MOD_LALT)>;
+        };
+
+        w2: w2 {
+            compatible = "zmk,behavior-mod-morph";
+            label = "W2";
+            bindings = <&kp W>, <&kp NUMBER_2>;
+
+            #binding-cells = <0>;
+            mods = <(MOD_LALT)>;
+        };
+
+        e3: e3 {
+            compatible = "zmk,behavior-mod-morph";
+            label = "E3";
+            bindings = <&kp E>, <&kp NUMBER_3>;
+
+            #binding-cells = <0>;
+            mods = <(MOD_LALT)>;
+        };
+
+        r4: r4 {
+            compatible = "zmk,behavior-mod-morph";
+            label = "R4";
+            bindings = <&kp R>, <&kp NUMBER_4>;
+
+            #binding-cells = <0>;
+            mods = <(MOD_LALT)>;
+        };
+
+        t5: t5 {
+            compatible = "zmk,behavior-mod-morph";
+            label = "T5";
+            bindings = <&kp R>, <&kp N5>;
+
+            #binding-cells = <0>;
+            mods = <(MOD_LALT)>;
+        };
+
+        y6: y6 {
+            compatible = "zmk,behavior-mod-morph";
+            label = "Y6";
+            bindings = <&kp Y>, <&kp NUMBER_6>;
+
+            #binding-cells = <0>;
+            mods = <(MOD_LALT)>;
+        };
+
+        u7: u7 {
+            compatible = "zmk,behavior-mod-morph";
+            label = "U7";
+            bindings = <&kp U>, <&kp N7>;
+
+            #binding-cells = <0>;
+            mods = <(MOD_LALT)>;
+        };
+
+        i8: i8 {
+            compatible = "zmk,behavior-mod-morph";
+            label = "I8";
+            bindings = <&kp I>, <&kp N8>;
+
+            #binding-cells = <0>;
+            mods = <(MOD_LALT)>;
+        };
+
+        o9: o9 {
+            compatible = "zmk,behavior-mod-morph";
+            label = "O9";
+            bindings = <&kp O>, <&kp N9>;
+
+            #binding-cells = <0>;
+            mods = <(MOD_LALT)>;
+        };
+
+        p0: p0 {
+            compatible = "zmk,behavior-mod-morph";
+            label = "P0";
+            bindings = <&kp P>, <&kp N0>;
 
             #binding-cells = <0>;
             mods = <(MOD_LALT)>;
@@ -76,7 +157,7 @@
             //                    | GUI | LWR | SPC |   | ENT | RSE  | ALT |
 
             bindings = <
-&kp ESCAPE  &q     &kp W  &kp E      &kp R     &kp T        &kp Y      &kp U          &kp I          &kp O    &kp P     &kp BSPC
+&kp ESCAPE  &q1    &kp W  &kp E      &kp R     &kp T        &kp Y      &kp U          &kp I          &kp O    &kp P     &kp BSPC
 &kp LCTRL   &kp A  &kp S  &kp D      &kp F     &kp G        &kp H      &kp J          &kp K          &kp L    &kp SEMI  &kp SQT
 &kp LSHFT   &kp Z  &kp X  &kp C      &kp V     &kp B        &kp N      &kp M          &kp COMMA      &kp DOT  &kp FSLH  &kp RSHFT
                           &kp LMETA  &kp LALT  &kp SPACE    &kp ENTER  &ht_layer 1 1  &ht_layer 2 2
