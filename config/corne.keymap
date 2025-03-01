@@ -172,9 +172,9 @@
             //                    | GUI |     | SPC |   | ENT |     | ALT |
 
             bindings = <
-&kp ESCAPE  &kp EXCLAMATION  &kp AT_SIGN       &kp HASH           &kp DOLLAR            &kp PERCENT             &kp CARET       &kp AMPERSAND   &kp ASTERISK  &mt LESS_THAN LEFT_PARENTHESIS  &mt GREATER_THAN RIGHT_PARENTHESIS  &kp BACKSPACE
-&kp LCTRL   &kp LESS_THAN    &kp GREATER_THAN  &kp C_VOLUME_DOWN  &kp C_VOLUME_UP       &kp K_MUTE              &kp LEFT_ARROW  &kp DOWN_ARROW  &kp UP_ARROW  &kp RIGHT_ARROW                 &mt UNDER KP_SUBTRACT               &mt KP_PLUS KP_EQUAL
-&kp LSHFT   &kp GRAVE        &kp PAGE_DOWN     &kp PAGE_UP        &kp C_BRIGHTNESS_DEC  &kp C_BRIGHTNESS_INC    &kp BACKSLASH   &kp TILDE       &kp SLASH     &kp LEFT_BRACKET                &kp RIGHT_BRACKET                   &kp RSHIFT
+&kp ESCAPE  &kp EXCLAMATION  &kp AT_SIGN       &kp HASH           &kp DOLLAR            &kp PERCENT             &kp CARET       &kp AMPERSAND   &kp ASTERISK  &kp LEFT_PARENTHESIS  &kp RIGHT_PARENTHESIS  &kp BACKSPACE
+&kp LCTRL   &kp LESS_THAN    &kp GREATER_THAN  &kp C_VOLUME_DOWN  &kp C_VOLUME_UP       &kp K_MUTE              &kp LEFT_ARROW  &kp DOWN_ARROW  &kp UP_ARROW  &kp RIGHT_ARROW       &kp MINUS              &kp EQUAL
+&kp LSHFT   &kp GRAVE        &kp PAGE_DOWN     &kp PAGE_UP        &kp C_BRIGHTNESS_DEC  &kp C_BRIGHTNESS_INC    &kp BACKSLASH   &kp TILDE       &kp SLASH     &kp LEFT_BRACKET      &kp RIGHT_BRACKET      &kp RSHIFT
                                                &kp LMETA          &kp LALT              &kp SPACE               &kp ENTER       &to 0           &to 2
             >;
         };
