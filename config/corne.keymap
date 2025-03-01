@@ -117,10 +117,10 @@
             //                    | GUI | LWR | SPC |   | ENT | RSE  | ALT |
 
             bindings = <
-&kp ESCAPE  &mt NUMBER_1 Q  &mt NUMBER_2 W  &mt NUMBER_3 E  &mt NUMBER_4 R  &mt N5 T     &mt NUMBER_6 Y  &mt N7 U       &mt N8 I       &mt N9 O  &mt N0 P  &kp BSPC
-&kp LCTRL   &kp A           &kp S           &kp D           &kp F           &kp G        &kp H           &kp J          &kp K          &kp L     &kp SEMI  &kp SQT
-&kp LSHFT   &kp Z           &kp X           &kp C           &kp V           &kp B        &kp N           &kp M          &kp COMMA      &kp DOT   &kp FSLH  &kp RSHFT
-                                            &kp LMETA       &kp LALT        &kp SPACE    &kp ENTER       &ht_layer 1 1  &ht_layer 2 2
+&kp ESCAPE  &kp Q  &kp W  &kp E      &kp R     &kp T        &kp Y      &kp U          &kp I          &kp O    &kp P     &kp BSPC
+&kp LCTRL   &kp A  &kp S  &kp D      &kp F     &kp G        &kp H      &kp J          &kp K          &kp L    &kp SEMI  &kp SQT
+&kp LSHFT   &kp Z  &kp X  &kp C      &kp V     &kp B        &kp N      &kp M          &kp COMMA      &kp DOT  &kp FSLH  &kp RSHFT
+                          &kp LMETA  &kp LALT  &kp SPACE    &kp ENTER  &ht_layer 1 1  &ht_layer 2 2
             >;
         };
 
