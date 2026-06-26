@@ -25,13 +25,17 @@ LOG_MODULE_REGISTER(pim447_poll, LOG_LEVEL_INF);
 #define PIM447_REG_SWITCH 0x08
 #define PIM447_MSK_SWITCH_PRESSED 0x80
 
-/* --- Tunables: change a value, then rebuild + flash the right half ---------
- * PIM447_SCALE    cursor-speed multiplier (raw ball counts are ~1-5 per poll).
- * PIM447_SWAP_XY  1 = swap X/Y; fixes a 90-degree mounting rotation.
- * PIM447_INVERT_X 1 = reverse left/right.
- * PIM447_INVERT_Y 1 = reverse up/down. */
+/* --- Movement feel: change a value, then rebuild + flash the right half -----
+ * Output per axis = raw * (ACCEL_BASE + speed * ACCEL_GAIN), where speed is
+ * |rx| + |ry| this poll. Slow rolls stay precise (~ACCEL_BASE x); fast rolls
+ * accelerate so a flick covers distance. ACCEL_GAIN 0 = flat ACCEL_BASE scale.
+ *   ACCEL_BASE   baseline multiplier for slow movement (raise = faster
+ * overall). ACCEL_GAIN   acceleration strength (raise = snappier fast moves).
+ *   SWAP_XY      1 = swap X/Y; fixes a 90-degree mounting rotation.
+ *   INVERT_X/_Y  1 = reverse that axis. */
 #define PIM447_POLL_MS 15
-#define PIM447_SCALE 8
+#define PIM447_ACCEL_BASE 2
+#define PIM447_ACCEL_GAIN 1
 #define PIM447_SWAP_XY 1
 #define PIM447_INVERT_X 0
 #define PIM447_INVERT_Y 1
@@ -93,8 +97,12 @@ static void pim447_poll_work(struct k_work *work) {
 #if PIM447_INVERT_Y
     ry = -ry;
 #endif
-    int dx = rx * PIM447_SCALE;
-    int dy = ry * PIM447_SCALE;
+    /* Speed-based acceleration: bigger multiplier for faster rolls, so slow
+     * movement stays precise and fast flicks cover ground (less janky). */
+    int speed = (rx < 0 ? -rx : rx) + (ry < 0 ? -ry : ry);
+    int accel = PIM447_ACCEL_BASE + speed * PIM447_ACCEL_GAIN;
+    int dx = rx * accel;
+    int dy = ry * accel;
 
     if (dx != 0 || dy != 0) {
       LOG_INF("move: L%u R%u U%u D%u -> dx=%d dy=%d", buf[0], buf[1], buf[2],
