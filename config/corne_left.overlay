@@ -1,0 +1,10 @@
+/*
+ * LEFT half = split CENTRAL. Receives the trackball's input events from the
+ * peripheral over the split link and turns them into HID mouse reports, so we
+ * just enable the listener that corne.dtsi defines (disabled).
+ */
+#include "corne.dtsi"
+
+&trackball_listener {
+    status = "okay";
+};

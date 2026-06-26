@@ -1,0 +1,30 @@
+/*
+ * Shared split devicetree for the PIM447 trackball.
+ *
+ * The trackball is physically on the RIGHT (peripheral) half. ZMK forwards its
+ * input to the LEFT (central) half via a zmk,input-split device:
+ *   - peripheral (corne_right.overlay): defines the trackball and binds it to
+ *     the input-split (device = <&trackball>), which forwards events over the
+ *     split link.
+ *   - central (corne_left.overlay): enables the listener below, which receives
+ *     the forwarded events and emits HID mouse reports to the host.
+ * The listener is defined here (disabled) so both builds can reference it
+ * without an "undefined node" error.
+ */
+/ {
+    split_inputs {
+        #address-cells = <1>;
+        #size-cells = <0>;
+
+        trackball_split: trackball_split@0 {
+            compatible = "zmk,input-split";
+            reg = <0>;
+        };
+    };
+
+    trackball_listener: trackball_listener {
+        compatible = "zmk,input-listener";
+        status = "disabled";
+        device = <&trackball_split>;
+    };
+};

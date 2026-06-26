@@ -148,12 +148,11 @@ static int pim447_poll_init(const struct device *dev) {
 
   k_work_init_delayable(&data->work, pim447_poll_work);
 
-#if IS_ENABLED(CONFIG_ZMK_SPLIT_ROLE_CENTRAL)
+  /* The trackball node lives only in the peripheral overlay, so this driver
+   * instantiates only on the half that physically has the ball. Poll wherever
+   * it runs; its events are forwarded to the central via zmk,input-split. */
   k_work_schedule(&data->work, K_MSEC(500));
-  LOG_INF("polling scheduled (central half)");
-#else
-  LOG_INF("peripheral half — not polling");
-#endif
+  LOG_INF("polling scheduled");
   return 0;
 }
 
