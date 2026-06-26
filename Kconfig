@@ -1,0 +1,15 @@
+config ZMK_I2C_SCANNER
+	bool "Boot-time I2C bus scanner (diagnostic)"
+	depends on I2C
+	help
+	  Probes I2C addresses 0x08-0x77 on i2c0 every few seconds and logs
+	  which addresses ACK. Pair with CONFIG_ZMK_USB_LOGGING=y and read the
+	  output over a USB serial monitor. Temporary diagnostic only.
+
+config ZMK_GPIO_FINDER
+	bool "Boot-time GPIO INT-finder (diagnostic)"
+	help
+	  Watches the free nice!nano GPIO pads and logs which one goes LOW when
+	  the trackball is moved (the PIM447 INT line). Pair with
+	  CONFIG_ZMK_USB_LOGGING=y and read over a USB serial monitor.
+	  Temporary diagnostic only.

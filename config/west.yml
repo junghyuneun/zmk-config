@@ -5,8 +5,9 @@ manifest:
     # nice_oled
     - name: mctechnology17
       url-base: https://github.com/mctechnology17
-    - name: zmk_ds87
-      url-base: https://github.com/daniel2887
+    # pim447 trackball driver
+    - name: t0bybr
+      url-base: https://github.com/t0bybr
   projects:
     - name: zmk
       remote: zmkfirmware
@@ -16,9 +17,9 @@ manifest:
     - name: zmk-nice-oled
       remote: mctechnology17
       revision: main
-    - name: zmk
-      remote: zmk_ds87
-      revision: ds87-mouse-pim447
-      import: app/west.yml
+    # pim447 trackball driver (PIM447 native pointing)
+    - name: pim447
+      remote: t0bybr
+      revision: main
   self:
     path: config
