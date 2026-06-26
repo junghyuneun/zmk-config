@@ -25,8 +25,16 @@ LOG_MODULE_REGISTER(pim447_poll, LOG_LEVEL_INF);
 #define PIM447_REG_SWITCH 0x08
 #define PIM447_MSK_SWITCH_PRESSED 0x80
 
+/* --- Tunables: change a value, then rebuild + flash the right half ---------
+ * PIM447_SCALE    cursor-speed multiplier (raw ball counts are ~1-5 per poll).
+ * PIM447_SWAP_XY  1 = swap X/Y; fixes a 90-degree mounting rotation.
+ * PIM447_INVERT_X 1 = reverse left/right.
+ * PIM447_INVERT_Y 1 = reverse up/down. */
 #define PIM447_POLL_MS 15
-#define PIM447_SCALE 1
+#define PIM447_SCALE 8
+#define PIM447_SWAP_XY 0
+#define PIM447_INVERT_X 0
+#define PIM447_INVERT_Y 0
 
 struct pim447_poll_config {
   struct i2c_dt_spec i2c;
@@ -71,8 +79,22 @@ static void pim447_poll_work(struct k_work *work) {
       i2c_reg_write_byte_dt(&cfg->i2c, PIM447_REG_DOWN, 0);
     }
 
-    int dx = ((int)buf[1] - (int)buf[0]) * PIM447_SCALE; /* RIGHT - LEFT */
-    int dy = ((int)buf[3] - (int)buf[2]) * PIM447_SCALE; /* DOWN  - UP   */
+    /* Raw ball deltas, then apply mounting orientation + speed scaling. */
+    int rx = (int)buf[1] - (int)buf[0]; /* RIGHT - LEFT */
+    int ry = (int)buf[3] - (int)buf[2]; /* DOWN  - UP   */
+#if PIM447_SWAP_XY
+    int tmp = rx;
+    rx = ry;
+    ry = tmp;
+#endif
+#if PIM447_INVERT_X
+    rx = -rx;
+#endif
+#if PIM447_INVERT_Y
+    ry = -ry;
+#endif
+    int dx = rx * PIM447_SCALE;
+    int dy = ry * PIM447_SCALE;
 
     if (dx != 0 || dy != 0) {
       LOG_INF("move: L%u R%u U%u D%u -> dx=%d dy=%d", buf[0], buf[1], buf[2],
