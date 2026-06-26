@@ -48,14 +48,28 @@ static void pim447_poll_work(struct k_work *work) {
 
   data->polls++;
 
-  uint8_t buf[4] = {0};
+  /* One burst read covers LEFT..SWITCH (0x04-0x08 are contiguous), replacing
+   * the old 4-byte read plus a separate switch read. */
+  uint8_t buf[5] = {0};
   int rc = i2c_burst_read_dt(&cfg->i2c, PIM447_REG_LEFT, buf, sizeof(buf));
 
   if (rc == 0) {
-    i2c_reg_write_byte_dt(&cfg->i2c, PIM447_REG_LEFT, 0);
-    i2c_reg_write_byte_dt(&cfg->i2c, PIM447_REG_RIGHT, 0);
-    i2c_reg_write_byte_dt(&cfg->i2c, PIM447_REG_UP, 0);
-    i2c_reg_write_byte_dt(&cfg->i2c, PIM447_REG_DOWN, 0);
+    /* Movement accumulators do NOT auto-clear on read; zero only the axes that
+     * actually moved. Idle polls thus issue a single I2C read (no writes),
+     * which sharply cuts bus traffic and the address/data NACKs seen at 66 Hz.
+     */
+    if (buf[0]) {
+      i2c_reg_write_byte_dt(&cfg->i2c, PIM447_REG_LEFT, 0);
+    }
+    if (buf[1]) {
+      i2c_reg_write_byte_dt(&cfg->i2c, PIM447_REG_RIGHT, 0);
+    }
+    if (buf[2]) {
+      i2c_reg_write_byte_dt(&cfg->i2c, PIM447_REG_UP, 0);
+    }
+    if (buf[3]) {
+      i2c_reg_write_byte_dt(&cfg->i2c, PIM447_REG_DOWN, 0);
+    }
 
     int dx = ((int)buf[1] - (int)buf[0]) * PIM447_SCALE; /* RIGHT - LEFT */
     int dy = ((int)buf[3] - (int)buf[2]) * PIM447_SCALE; /* DOWN  - UP   */
@@ -70,11 +84,9 @@ static void pim447_poll_work(struct k_work *work) {
         input_report_rel(dev, INPUT_REL_Y, dy, true, K_NO_WAIT);
       }
     }
-  }
 
-  uint8_t sw = 0;
-  if (i2c_reg_read_byte_dt(&cfg->i2c, PIM447_REG_SWITCH, &sw) == 0) {
-    bool pressed = (sw & PIM447_MSK_SWITCH_PRESSED) != 0;
+    /* Switch state arrived in the same burst (buf[4] = REG_SWITCH = 0x08). */
+    bool pressed = (buf[4] & PIM447_MSK_SWITCH_PRESSED) != 0;
     if (pressed != data->sw_last) {
       LOG_INF("button %s", pressed ? "DOWN" : "up");
       input_report_key(dev, INPUT_BTN_0, pressed ? 1 : 0, true, K_NO_WAIT);
