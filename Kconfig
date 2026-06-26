@@ -11,10 +11,10 @@ config ZMK_GPIO_FINDER
 
 config ZMK_PIM447_POLL
 	bool "Pimoroni PIM447 trackball (polled input driver)"
-	depends on I2C
-	select INPUT
+	depends on I2C && INPUT
 	help
 	  Polling I2C driver for the PIM447 trackball. Binds to the t0bybr module's
 	  "zmk,pimoroni-pim447" devicetree binding but reads on a timer instead of
 	  using the interrupt line. Reports movement + click via the input subsystem.
-	  Polls only on the split central half.
+	  INPUT is already provided by ZMK_POINTING; depend on it (do NOT select, or
+	  it forms a Kconfig dependency loop through I2C).
