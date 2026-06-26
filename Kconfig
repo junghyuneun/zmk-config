@@ -3,13 +3,18 @@ config ZMK_I2C_SCANNER
 	depends on I2C
 	help
 	  Probes I2C addresses 0x08-0x77 on i2c0 every few seconds and logs
-	  which addresses ACK. Pair with CONFIG_ZMK_USB_LOGGING=y and read the
-	  output over a USB serial monitor. Temporary diagnostic only.
+	  which addresses ACK. Pair with CONFIG_ZMK_USB_LOGGING=y. Diagnostic only.
 
 config ZMK_GPIO_FINDER
 	bool "Boot-time GPIO INT-finder (diagnostic)"
 	help
 	  Watches the free nice!nano GPIO pads and logs which one goes LOW when
-	  the trackball is moved (the PIM447 INT line). Pair with
-	  CONFIG_ZMK_USB_LOGGING=y and read over a USB serial monitor.
-	  Temporary diagnostic only.
+	  the trackball is moved. Pair with CONFIG_ZMK_USB_LOGGING=y. Diagnostic only.
+
+config ZMK_PIM447_POLL
+	bool "Pimoroni PIM447 trackball (polled input driver)"
+	depends on I2C && INPUT
+	help
+	  Polling I2C driver for the PIM447 trackball. Reports relative movement
+	  and the click through the Zephyr input subsystem, so no interrupt pin
+	  is required. The polling loop only runs on the split central half.

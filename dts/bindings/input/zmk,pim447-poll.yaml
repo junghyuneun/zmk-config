@@ -1,0 +1,16 @@
+description: Pimoroni PIM447 trackball, polled over I2C (no interrupt line needed)
+
+compatible: "zmk,pim447-poll"
+
+include: i2c-device.yaml
+
+properties:
+  poll-interval-ms:
+    type: int
+    default: 15
+    description: How often to read the trackball, in milliseconds.
+
+  scale:
+    type: int
+    default: 1
+    description: Integer multiplier applied to raw movement deltas.

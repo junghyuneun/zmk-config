@@ -44,3 +44,23 @@
         zmk,underglow = &led_strip;
     };
 };
+
+/* Pimoroni PIM447 trackball on the shared OLED I2C bus (polled, no INT pin) */
+&pro_micro_i2c {
+    status = "okay";
+
+    trackball: trackball@a {
+        compatible = "zmk,pim447-poll";
+        reg = <0x0a>;
+        poll-interval-ms = <15>;
+        scale = <1>;
+        status = "okay";
+    };
+};
+
+/ {
+    trackball_listener {
+        compatible = "zmk,input-listener";
+        device = <&trackball>;
+    };
+};
