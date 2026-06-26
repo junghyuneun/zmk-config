@@ -1,10 +1,7 @@
 /*
- * Pimoroni PIM447 trackball — polled I2C input driver for ZMK.
- *
- * Reads the movement registers over I2C on a timer (no interrupt line needed)
- * and reports relative X/Y + a button via the Zephyr input subsystem. A
- * zmk,input-listener then turns those into HID mouse reports. The polling loop
- * only runs on the CENTRAL half (the one connected to the host).
+ * Pimoroni PIM447 trackball — polled I2C input driver for ZMK (diagnostic
+ * build). Verbose logging: prints init state, a ~2 s heartbeat, and every
+ * movement read.
  */
 #define DT_DRV_COMPAT zmk_pim447_poll
 
@@ -33,6 +30,7 @@ struct pim447_poll_data {
   const struct device *dev;
   struct k_work_delayable work;
   bool sw_last;
+  uint32_t polls;
 };
 
 static void pim447_poll_work(struct k_work *work) {
@@ -42,10 +40,12 @@ static void pim447_poll_work(struct k_work *work) {
   const struct device *dev = data->dev;
   const struct pim447_poll_config *cfg = dev->config;
 
-  uint8_t buf[4] = {0};
+  data->polls++;
 
-  if (i2c_burst_read_dt(&cfg->i2c, PIM447_REG_LEFT, buf, sizeof(buf)) == 0) {
-    /* The L/R/U/D counters accumulate; clear them after each read. */
+  uint8_t buf[4] = {0};
+  int rc = i2c_burst_read_dt(&cfg->i2c, PIM447_REG_LEFT, buf, sizeof(buf));
+
+  if (rc == 0) {
     i2c_reg_write_byte_dt(&cfg->i2c, PIM447_REG_LEFT, 0);
     i2c_reg_write_byte_dt(&cfg->i2c, PIM447_REG_RIGHT, 0);
     i2c_reg_write_byte_dt(&cfg->i2c, PIM447_REG_UP, 0);
@@ -54,11 +54,15 @@ static void pim447_poll_work(struct k_work *work) {
     int dx = ((int)buf[1] - (int)buf[0]) * cfg->scale; /* RIGHT - LEFT */
     int dy = ((int)buf[3] - (int)buf[2]) * cfg->scale; /* DOWN  - UP   */
 
-    if (dx != 0) {
-      input_report_rel(dev, INPUT_REL_X, dx, (dy == 0), K_NO_WAIT);
-    }
-    if (dy != 0) {
-      input_report_rel(dev, INPUT_REL_Y, dy, true, K_NO_WAIT);
+    if (dx != 0 || dy != 0) {
+      LOG_INF("move: L%u R%u U%u D%u -> dx=%d dy=%d", buf[0], buf[1], buf[2],
+              buf[3], dx, dy);
+      if (dx != 0) {
+        input_report_rel(dev, INPUT_REL_X, dx, (dy == 0), K_NO_WAIT);
+      }
+      if (dy != 0) {
+        input_report_rel(dev, INPUT_REL_Y, dy, true, K_NO_WAIT);
+      }
     }
   }
 
@@ -66,9 +70,14 @@ static void pim447_poll_work(struct k_work *work) {
   if (i2c_reg_read_byte_dt(&cfg->i2c, PIM447_REG_SWITCH, &sw) == 0) {
     bool pressed = (sw & PIM447_MSK_SWITCH_PRESSED) != 0;
     if (pressed != data->sw_last) {
+      LOG_INF("button %s", pressed ? "DOWN" : "up");
       input_report_key(dev, INPUT_BTN_0, pressed ? 1 : 0, true, K_NO_WAIT);
       data->sw_last = pressed;
     }
+  }
+
+  if (data->polls % 130 == 0) { /* ~2 s heartbeat */
+    LOG_INF("alive: polls=%u last_i2c_rc=%d", data->polls, rc);
   }
 
   k_work_reschedule(dwork, K_MSEC(cfg->poll_ms));
@@ -80,7 +89,11 @@ static int pim447_poll_init(const struct device *dev) {
 
   data->dev = dev;
 
-  if (!i2c_is_ready_dt(&cfg->i2c)) {
+  bool ready = i2c_is_ready_dt(&cfg->i2c);
+  LOG_INF("init: node matched, i2c_ready=%d, central=%d, poll=%ums", ready,
+          IS_ENABLED(CONFIG_ZMK_SPLIT_ROLE_CENTRAL), cfg->poll_ms);
+
+  if (!ready) {
     LOG_ERR("I2C bus not ready");
     return -ENODEV;
   }
@@ -89,9 +102,9 @@ static int pim447_poll_init(const struct device *dev) {
 
 #if IS_ENABLED(CONFIG_ZMK_SPLIT_ROLE_CENTRAL)
   k_work_schedule(&data->work, K_MSEC(500));
-  LOG_INF("PIM447 polling started @ %u ms", cfg->poll_ms);
+  LOG_INF("polling scheduled (central half)");
 #else
-  LOG_INF("PIM447 present; polling disabled on peripheral half");
+  LOG_INF("peripheral half — not polling");
 #endif
   return 0;
 }
