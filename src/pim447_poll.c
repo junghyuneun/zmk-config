@@ -1,9 +1,14 @@
 /*
- * Pimoroni PIM447 trackball — polled I2C input driver for ZMK (diagnostic
- * build). Verbose logging: prints init state, a ~2 s heartbeat, and every
- * movement read.
+ * Pimoroni PIM447 trackball — polled I2C input driver for ZMK.
+ *
+ * Binds to the t0bybr module's "zmk,pimoroni-pim447" devicetree binding (which
+ * is reliably discovered, unlike a config-repo binding), but reads on a timer
+ * instead of using the interrupt line. The node must carry an int-gpios (the
+ * binding requires it) but this driver never touches that pin.
+ *
+ * Verbose logging: init state, ~2 s heartbeat, and every detected movement.
  */
-#define DT_DRV_COMPAT zmk_pim447_poll
+#define DT_DRV_COMPAT zmk_pimoroni_pim447
 
 #include <zephyr/device.h>
 #include <zephyr/drivers/i2c.h>
@@ -20,10 +25,11 @@ LOG_MODULE_REGISTER(pim447_poll, LOG_LEVEL_INF);
 #define PIM447_REG_SWITCH 0x08
 #define PIM447_MSK_SWITCH_PRESSED 0x80
 
+#define PIM447_POLL_MS 15
+#define PIM447_SCALE 1
+
 struct pim447_poll_config {
   struct i2c_dt_spec i2c;
-  uint16_t poll_ms;
-  uint8_t scale;
 };
 
 struct pim447_poll_data {
@@ -51,8 +57,8 @@ static void pim447_poll_work(struct k_work *work) {
     i2c_reg_write_byte_dt(&cfg->i2c, PIM447_REG_UP, 0);
     i2c_reg_write_byte_dt(&cfg->i2c, PIM447_REG_DOWN, 0);
 
-    int dx = ((int)buf[1] - (int)buf[0]) * cfg->scale; /* RIGHT - LEFT */
-    int dy = ((int)buf[3] - (int)buf[2]) * cfg->scale; /* DOWN  - UP   */
+    int dx = ((int)buf[1] - (int)buf[0]) * PIM447_SCALE; /* RIGHT - LEFT */
+    int dy = ((int)buf[3] - (int)buf[2]) * PIM447_SCALE; /* DOWN  - UP   */
 
     if (dx != 0 || dy != 0) {
       LOG_INF("move: L%u R%u U%u D%u -> dx=%d dy=%d", buf[0], buf[1], buf[2],
@@ -76,11 +82,11 @@ static void pim447_poll_work(struct k_work *work) {
     }
   }
 
-  if (data->polls % 130 == 0) { /* ~2 s heartbeat */
+  if (data->polls % 130 == 0) {
     LOG_INF("alive: polls=%u last_i2c_rc=%d", data->polls, rc);
   }
 
-  k_work_reschedule(dwork, K_MSEC(cfg->poll_ms));
+  k_work_reschedule(dwork, K_MSEC(PIM447_POLL_MS));
 }
 
 static int pim447_poll_init(const struct device *dev) {
@@ -90,8 +96,8 @@ static int pim447_poll_init(const struct device *dev) {
   data->dev = dev;
 
   bool ready = i2c_is_ready_dt(&cfg->i2c);
-  LOG_INF("init: node matched, i2c_ready=%d, central=%d, poll=%ums", ready,
-          IS_ENABLED(CONFIG_ZMK_SPLIT_ROLE_CENTRAL), cfg->poll_ms);
+  LOG_INF("init: node matched, i2c_ready=%d, central=%d", ready,
+          IS_ENABLED(CONFIG_ZMK_SPLIT_ROLE_CENTRAL));
 
   if (!ready) {
     LOG_ERR("I2C bus not ready");
@@ -113,8 +119,6 @@ static int pim447_poll_init(const struct device *dev) {
   static struct pim447_poll_data pim447_poll_data_##n;                         \
   static const struct pim447_poll_config pim447_poll_cfg_##n = {               \
       .i2c = I2C_DT_SPEC_INST_GET(n),                                          \
-      .poll_ms = DT_INST_PROP_OR(n, poll_interval_ms, 15),                     \
-      .scale = DT_INST_PROP_OR(n, scale, 1),                                   \
   };                                                                           \
   DEVICE_DT_INST_DEFINE(n, pim447_poll_init, NULL, &pim447_poll_data_##n,      \
                         &pim447_poll_cfg_##n, POST_KERNEL,                     \

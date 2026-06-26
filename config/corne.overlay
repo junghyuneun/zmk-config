@@ -50,10 +50,9 @@
     status = "okay";
 
     trackball: trackball@a {
-        compatible = "zmk,pim447-poll";
+        compatible = "zmk,pimoroni-pim447";
         reg = <0x0a>;
-        poll-interval-ms = <15>;
-        scale = <1>;
+        int-gpios = <&gpio0 8 0>;
         status = "okay";
     };
 };
