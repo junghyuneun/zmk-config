@@ -32,9 +32,9 @@ LOG_MODULE_REGISTER(pim447_poll, LOG_LEVEL_INF);
  * PIM447_INVERT_Y 1 = reverse up/down. */
 #define PIM447_POLL_MS 15
 #define PIM447_SCALE 8
-#define PIM447_SWAP_XY 0
+#define PIM447_SWAP_XY 1
 #define PIM447_INVERT_X 0
-#define PIM447_INVERT_Y 0
+#define PIM447_INVERT_Y 1
 
 struct pim447_poll_config {
   struct i2c_dt_spec i2c;
